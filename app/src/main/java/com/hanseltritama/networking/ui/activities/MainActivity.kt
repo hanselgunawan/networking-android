@@ -28,14 +28,14 @@
  * THE SOFTWARE.
  */
 
-package com.hanseltritama.ui.activities
+package com.hanseltritama.networking.ui.activities
 
 import android.app.Activity
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.LinearLayoutManager
 import com.hanseltritama.networking.R
-import com.hanseltritama.ui.adapters.RepoListAdapter
+import com.hanseltritama.networking.ui.adapters.RepoListAdapter
 import kotlinx.android.synthetic.main.activity_main.*
 import org.jetbrains.anko.doAsync
 import org.jetbrains.anko.longToast

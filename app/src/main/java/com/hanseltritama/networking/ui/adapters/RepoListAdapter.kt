@@ -28,7 +28,7 @@
  * THE SOFTWARE.
  */
 
-package com.hanseltritama.ui.adapters
+package com.hanseltritama.networking.ui.adapters
 
 import android.support.v7.widget.RecyclerView
 import android.view.ViewGroup
