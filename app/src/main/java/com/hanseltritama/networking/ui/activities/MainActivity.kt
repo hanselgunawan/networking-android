@@ -31,6 +31,9 @@
 package com.hanseltritama.networking.ui.activities
 
 import android.app.Activity
+import android.app.AlertDialog
+import android.content.Context
+import android.net.ConnectivityManager
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.LinearLayoutManager
@@ -54,6 +57,16 @@ class MainActivity : Activity() {
       "JetBrains/kotlin - The Kotlin Programming Language"
   )
 
+  private fun isNetworkConnected(): Boolean {
+    val connectivityManager = getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
+    // Retrieves an instance of the ConnectivityManager class from the current application context
+    val networkInfo = connectivityManager.activeNetworkInfo
+    // Retrieves an instance of the NetworkInfo class that represents the current network connection.
+    // This will be null if no network is available.
+    return networkInfo != null && networkInfo.isConnected
+    // Check if there is an available network connection and the device is connected.
+  }
+
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
     setContentView(R.layout.activity_main)
@@ -63,9 +76,16 @@ class MainActivity : Activity() {
 
     val url = "https://api.github.com/users/hanselgunawan/repos"
 
-    doAsync {
-      Request(url).run()
-      uiThread { longToast("Request Performed") }
+    if (isNetworkConnected()) {
+      doAsync {
+        Request(url).run()
+        uiThread { longToast("Request Performed") }
+      }
+    } else {
+      AlertDialog.Builder(this).setTitle("No Internet Connection")
+              .setMessage("Please check your internet connection and try again")
+              .setPositiveButton(android.R.string.ok) { _, _ ->}
+              .setIcon(android.R.drawable.ic_dialog_alert).show()
     }
   }
 }
