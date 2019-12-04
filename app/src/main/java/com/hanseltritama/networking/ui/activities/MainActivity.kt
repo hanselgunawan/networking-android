@@ -35,12 +35,12 @@ import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.LinearLayoutManager
 import com.hanseltritama.networking.R
+import com.hanseltritama.networking.data.Request
 import com.hanseltritama.networking.ui.adapters.RepoListAdapter
 import kotlinx.android.synthetic.main.activity_main.*
 import org.jetbrains.anko.doAsync
 import org.jetbrains.anko.longToast
 import org.jetbrains.anko.uiThread
-import com.raywenderlich.githubrepolist.data.Request
 
 class MainActivity : Activity() {
 
@@ -61,6 +61,11 @@ class MainActivity : Activity() {
     repoList.layoutManager = LinearLayoutManager(this)
     repoList.adapter = RepoListAdapter(items)
 
-    val url = "https://api.github.com/search/repositories?q=mario+language:kotlin&sort=stars&order=desc"
+    val url = "https://api.github.com/users/hanselgunawan/repos"
+
+    doAsync {
+      Request(url).run()
+      uiThread { longToast("Request Performed") }
+    }
   }
 }

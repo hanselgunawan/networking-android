@@ -28,12 +28,17 @@
  * THE SOFTWARE.
  */
 
-package com.raywenderlich.githubrepolist.data
+package com.hanseltritama.networking.data
+
+import android.util.Log
+import java.net.URL
 
 
 class Request(private val url: String) {
 
   fun run() {
-    //TODO: implement
+    val repoListJsonStr = URL(url).readText() // readText() makes the network request (max 2GB file size)
+    // BufferedReader.forEachLine() is used for more than 2GB
+    Log.d(javaClass.simpleName, repoListJsonStr)
   }
 }
