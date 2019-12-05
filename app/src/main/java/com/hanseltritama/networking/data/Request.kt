@@ -37,7 +37,7 @@ import java.net.URL
 
 class Request() {
 
-  companion object {
+  companion object { // we use companion object to declare static / non-interruptable value
       private val URL = "https://api.github.com/users/hanselgunawan/repos"
   }
 
