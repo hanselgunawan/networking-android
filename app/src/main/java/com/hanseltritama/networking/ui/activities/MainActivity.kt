@@ -78,8 +78,10 @@ class MainActivity : Activity() {
 
     if (isNetworkConnected()) {
       doAsync {
-        Request(url).run()
-        uiThread { longToast("Request Performed") }
+        val result = Request().run()
+        uiThread {
+          repoList.adapter = RepoListAdapter(result)
+        }
       }
     } else {
       AlertDialog.Builder(this).setTitle("No Internet Connection")

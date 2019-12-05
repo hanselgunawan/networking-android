@@ -31,14 +31,18 @@
 package com.hanseltritama.networking.data
 
 import android.util.Log
+import com.google.gson.Gson
 import java.net.URL
 
 
-class Request(private val url: String) {
+class Request() {
 
-  fun run() {
-    val repoListJsonStr = URL(url).readText() // readText() makes the network request (max 2GB file size)
-    // BufferedReader.forEachLine() is used for more than 2GB
-    Log.d(javaClass.simpleName, repoListJsonStr)
+  companion object {
+      private val URL = "https://api.github.com/users/hanselgunawan/repos"
+  }
+
+  fun run(): RepoResult {
+    val repoListJsonStr = URL(URL).readText()
+    return Gson().fromJson(repoListJsonStr, RepoResult::class.java) // parse JSON into our data structure
   }
 }
