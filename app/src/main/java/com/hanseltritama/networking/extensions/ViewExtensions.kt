@@ -28,7 +28,7 @@
  * THE SOFTWARE.
  */
 
-package com.raywenderlich.githubrepolist.extensions
+package com.hanseltritama.networking.extensions
 
 import android.content.Context
 import android.view.View

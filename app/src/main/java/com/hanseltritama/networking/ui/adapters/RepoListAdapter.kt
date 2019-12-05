@@ -31,19 +31,36 @@
 package com.hanseltritama.networking.ui.adapters
 
 import android.support.v7.widget.RecyclerView
+import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
+import com.hanseltritama.networking.R
+import com.hanseltritama.networking.data.Item
+import com.hanseltritama.networking.data.RepoResult
+import com.hanseltritama.networking.extensions.ctx
+import kotlinx.android.synthetic.main.item_repo.view.*
 
 
-class RepoListAdapter(private val items: List<String>) : RecyclerView.Adapter<RepoListAdapter.ViewHolder>() {
+class RepoListAdapter(private val repoList: RepoResult) : RecyclerView.Adapter<RepoListAdapter.ViewHolder>() {
 
-  override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) = ViewHolder(TextView(parent.context))
-
-  override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-    holder.textView.text = items[position]
+  override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
+    val view = LayoutInflater.from(parent.ctx).inflate(R.layout.item_repo, parent, false)
+    return ViewHolder(view)
   }
 
-  override fun getItemCount(): Int = items.size
+  override fun onBindViewHolder(holder: ViewHolder, position: Int) {
+    holder.bindRepo(repoList.items[position])
+  }
 
-  class ViewHolder(val textView: TextView) : RecyclerView.ViewHolder(textView)
+  override fun getItemCount(): Int = repoList.items.size
+
+  class ViewHolder(val view: View) : RecyclerView.ViewHolder(view) {
+    fun bindRepo(repo: Item) {
+      with(repo) {
+        itemView.username.text = repo.owner.login.orEmpty()
+        itemView.repoName.text = repo.full_name.orEmpty()
+        itemView.repoDescription.text = repo.description.orEmpty()
+      }
+    }
+  }
 }
