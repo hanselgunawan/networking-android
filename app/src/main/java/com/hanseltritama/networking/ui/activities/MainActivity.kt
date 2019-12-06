@@ -35,17 +35,37 @@ import android.app.AlertDialog
 import android.content.Context
 import android.net.ConnectivityManager
 import android.os.Bundle
-import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.LinearLayoutManager
+import android.util.Log
+import api.RepositoryRetriever
 import com.hanseltritama.networking.R
+import com.hanseltritama.networking.data.RepoResult
 import com.hanseltritama.networking.data.Request
 import com.hanseltritama.networking.ui.adapters.RepoListAdapter
 import kotlinx.android.synthetic.main.activity_main.*
 import org.jetbrains.anko.doAsync
-import org.jetbrains.anko.longToast
 import org.jetbrains.anko.uiThread
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
+
 
 class MainActivity : Activity() {
+
+  private val repoRetriever = RepositoryRetriever()
+
+  private val callback = object : Callback<RepoResult> {
+    override fun onFailure(call: Call<RepoResult>?, t: Throwable?) {
+      Log.e("MainActivity", "Problem calling Github API")
+    }
+
+    override fun onResponse(call: Call<RepoResult>?, response: Response<RepoResult>?) {
+      response?.isSuccessful.let {
+        val resultList = RepoResult(response?.body()?.items ?: emptyList())
+        repoList.adapter = RepoListAdapter(resultList)
+      }
+    }
+  }
 
   private fun isNetworkConnected(): Boolean {
     val connectivityManager = getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
@@ -64,12 +84,7 @@ class MainActivity : Activity() {
     repoList.layoutManager = LinearLayoutManager(this)
 
     if (isNetworkConnected()) {
-      doAsync {
-        val result = Request().run()
-        uiThread {
-          repoList.adapter = RepoListAdapter(result)
-        }
-      }
+      repoRetriever.getRepositories(callback)
     } else {
       AlertDialog.Builder(this).setTitle("No Internet Connection")
               .setMessage("Please check your internet connection and try again")
