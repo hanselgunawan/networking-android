@@ -32,17 +32,20 @@ package com.hanseltritama.networking.data
 
 import android.util.Log
 import com.google.gson.Gson
+import com.google.gson.reflect.TypeToken
 import java.net.URL
 
 
 class Request() {
 
   companion object { // we use companion object to declare static / non-interruptable value
-      private val URL = "https://api.github.com/users/hanselgunawan/repos"
+    private val URL = "https://api.github.com/search/repositories"
+    private val SEARCH = "q=mario+language:kotlin&sort=stars&order=desc"
+    private val COMPLETE_URL = "$URL?$SEARCH"
   }
 
   fun run(): RepoResult {
-    val repoListJsonStr = URL(URL).readText()
+    val repoListJsonStr = URL(COMPLETE_URL).readText()
     return Gson().fromJson(repoListJsonStr, RepoResult::class.java) // parse JSON into our data structure
   }
 }

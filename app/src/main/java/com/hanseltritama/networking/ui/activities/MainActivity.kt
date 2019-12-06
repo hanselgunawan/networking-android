@@ -47,16 +47,6 @@ import org.jetbrains.anko.uiThread
 
 class MainActivity : Activity() {
 
-  private val items = listOf(
-      "JetBrains/kotlin - The Kotlin Programming Language",
-      "exercism/kotlin - Exercism exercises in Kotlin",
-      "cbeust/kobalt - A Kotlin-based build system for the JVM",
-      "JetBrains/kotlin - The Kotlin Programming Language",
-      "exercism/kotlin - Exercism exercises in Kotlin",
-      "cbeust/kobalt - A Kotlin-based build system for the JVM",
-      "JetBrains/kotlin - The Kotlin Programming Language"
-  )
-
   private fun isNetworkConnected(): Boolean {
     val connectivityManager = getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
     // Retrieves an instance of the ConnectivityManager class from the current application context
@@ -72,7 +62,6 @@ class MainActivity : Activity() {
     setContentView(R.layout.activity_main)
 
     repoList.layoutManager = LinearLayoutManager(this)
-    repoList.adapter = RepoListAdapter(items)
 
     val url = "https://api.github.com/users/hanselgunawan/repos"
 
