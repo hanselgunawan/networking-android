@@ -63,8 +63,6 @@ class MainActivity : Activity() {
 
     repoList.layoutManager = LinearLayoutManager(this)
 
-    val url = "https://api.github.com/users/hanselgunawan/repos"
-
     if (isNetworkConnected()) {
       doAsync {
         val result = Request().run()
