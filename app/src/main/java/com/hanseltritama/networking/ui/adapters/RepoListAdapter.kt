@@ -38,6 +38,7 @@ import com.hanseltritama.networking.R
 import com.hanseltritama.networking.data.Item
 import com.hanseltritama.networking.data.RepoResult
 import com.hanseltritama.networking.extensions.ctx
+import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.item_repo.view.*
 
 
@@ -60,6 +61,7 @@ class RepoListAdapter(private val repoList: RepoResult) : RecyclerView.Adapter<R
         itemView.username.text = repo.owner.login.orEmpty()
         itemView.repoName.text = repo.full_name.orEmpty()
         itemView.repoDescription.text = repo.description.orEmpty()
+        Picasso.get().load(repo.owner.avatar_url).into(itemView.icon)
       }
     }
   }

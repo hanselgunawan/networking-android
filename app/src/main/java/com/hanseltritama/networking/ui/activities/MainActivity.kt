@@ -83,6 +83,10 @@ class MainActivity : Activity() {
 
     repoList.layoutManager = LinearLayoutManager(this)
 
+    refreshBtn.setOnClickListener {
+      repoRetriever.getRepositories(callback)
+    }
+
     if (isNetworkConnected()) {
       repoRetriever.getRepositories(callback)
     } else {
