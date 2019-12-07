@@ -58,10 +58,10 @@ class RepoListAdapter(private val repoList: RepoResult) : RecyclerView.Adapter<R
   class ViewHolder(val view: View) : RecyclerView.ViewHolder(view) {
     fun bindRepo(repo: Item) {
       with(repo) {
-        itemView.username.text = repo.owner.login.orEmpty()
-        itemView.repoName.text = repo.full_name.orEmpty()
-        itemView.repoDescription.text = repo.description.orEmpty()
-        Picasso.get().load(repo.owner.avatar_url).into(itemView.icon)
+        itemView.username.text = owner.login.orEmpty()
+        itemView.repoName.text = full_name.orEmpty()
+        itemView.repoDescription.text = description.orEmpty()
+        Picasso.get().load(owner.avatar_url).into(itemView.icon)
       }
     }
   }
